@@ -72,7 +72,8 @@
         setTimeout(() => { window.location.href = 'admin/'; }, 800);
 
       } catch (err) {
-        showError('Network error. Please try again.');
+        console.error(err);
+        showError('Fetch Failed: ' + String(err));
       }
     })();
   </script>
