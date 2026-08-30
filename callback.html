@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DarkHub — Authenticating...</title>
-  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="assets/style.css" />
   <meta name="robots" content="noindex, nofollow" />
 </head>
 <body class="auth-body">
@@ -27,7 +27,7 @@
           <div class="auth-error">
             <span class="auth-icon">✗</span>
             <p>${msg}</p>
-            <a href="../admin/" class="btn-primary" style="margin-top:1rem">Back to Login</a>
+            <a href="admin/" class="btn-primary" style="margin-top:1rem">Back to Login</a>
           </div>`;
       }
 
@@ -69,7 +69,7 @@
             <p>Welcome, <strong>${data.user.login}</strong>! Redirecting...</p>
           </div>`;
 
-        setTimeout(() => { window.location.href = '../admin/'; }, 800);
+        setTimeout(() => { window.location.href = 'admin/'; }, 800);
 
       } catch (err) {
         showError('Network error. Please try again.');
