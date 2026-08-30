@@ -49,7 +49,7 @@
 
         if (!res.ok) {
           // Non-admin or error — show blocked message
-          showError(text || 'Unknown error');
+          const rawText = await res.text(); let msg = rawText; try { msg = JSON.parse(rawText).error || msg; } catch(e) {} showError(msg);
           return;
         }
 
