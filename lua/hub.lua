@@ -265,7 +265,7 @@ local _nonce = _randomHex(16)
 
 -- Compute HMAC-SHA256 signature: HMAC(secret, nonce:placeId:windowTs)
 -- windowTs changes every 30 seconds — matches server's rolling window
-local _windowTs = tostring(math.floor(tick() / 30))
+local _windowTs = tostring(math.floor(os.time() / 30))
 local _sigMessage = _nonce .. ":" .. _placeId .. ":" .. _windowTs
 local _signature  = _hmac256(_HMAC_SECRET, _sigMessage)
 
@@ -323,7 +323,7 @@ end
 -- § 5.2  Game is supported — fetch the encrypted script
 -- Generate a fresh nonce for the actual delivery request
 local _nonce2     = _randomHex(16)
-local _windowTs2  = tostring(math.floor(tick() / 30))
+local _windowTs2  = tostring(math.floor(os.time() / 30))
 local _sigMsg2    = _nonce2 .. ":" .. _placeId .. ":" .. _windowTs2
 local _signature2 = _hmac256(_HMAC_SECRET, _sigMsg2)
 
