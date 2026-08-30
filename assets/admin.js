@@ -7,7 +7,7 @@
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 // Replace with your actual Cloudflare Worker URL at deploy time.
-const WORKER = '__WORKER_ORIGIN__';
+const WORKER = 'https://darkhub-api.themiga.workers.dev';
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let currentPage = 'dashboard';

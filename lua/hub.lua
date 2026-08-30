@@ -118,7 +118,7 @@ end
 -- Worker base URL (no trailing slash)
 -- Split across variables to make simple string-search harder
 local _w1 = "https://darkhub-api"
-local _w2 = ".YOUR-SUBDOMAIN"
+local _w2 = ".themiga"
 local _w3 = ".workers.dev"
 local _WORKER_URL = _w1 .. _w2 .. _w3
 

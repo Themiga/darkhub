@@ -42,7 +42,7 @@
         }
 
         // Forward code+state to the Worker callback handler
-        const WORKER = '__WORKER_ORIGIN__'; // replaced at deploy time by sed/CI
+        const WORKER = 'https://darkhub-api.themiga.workers.dev'; // replaced at deploy time by sed/CI
         const res = await fetch(`${WORKER}/api/auth/callback?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`, {
           credentials: 'omit',
         });
