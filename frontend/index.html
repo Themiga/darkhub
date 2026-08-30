@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DarkHub — Roblox Script Hub</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <meta name="robots" content="noindex, nofollow" />
+</head>
+<body class="landing-body">
+
+  <!-- Animated background particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <span class="logo">Dark<span class="accent">Hub</span></span>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#loader">Loader</a>
+        <a href="admin/" class="btn-nav">Admin Panel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">🔒 Encrypted &middot; Server-Side Only</div>
+        <h1>The most <span class="gradient-text">secure</span><br />Roblox Script Hub</h1>
+        <p class="hero-sub">
+          DarkHub delivers your scripts to trusted players only — encrypted in transit,
+          never exposed in source, protected by multi-layer server validation.
+        </p>
+        <div class="hero-cta">
+          <a href="#loader" class="btn-primary">Get the Loader</a>
+          <a href="#features" class="btn-ghost">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="terminal-title">DarkHub Console</span>
+          </div>
+          <div class="terminal-body">
+            <span class="t-comment">-- Execute the Hub</span><br/>
+            <span class="t-fn">loadstring</span>(<span class="t-fn">game</span>:<span class="t-method">HttpGet</span>(<br/>
+            &nbsp;&nbsp;<span class="t-str">"https://your-worker.workers.dev/hub"</span><br/>
+            ))()<br/><br/>
+            <span class="t-comment">-- Output</span><br/>
+            <span class="t-green">✔ DarkHub authenticated</span><br/>
+            <span class="t-green">✔ Game supported</span><br/>
+            <span class="t-green">✔ Script loaded securely</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+      <div class="section-inner">
+        <h2 class="section-title">Built for Security</h2>
+        <p class="section-sub">Every layer is hardened against bypass, spoofing and source theft.</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3>AES-GCM at Rest</h3>
+            <p>All scripts are stored AES-256-GCM encrypted in the database. Plaintext never touches disk.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔑</div>
+            <h3>Per-Request XOR Key</h3>
+            <p>Each loader request generates a unique HMAC-derived XOR keystream. Captured traffic is useless.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🛡️</div>
+            <h3>One-Time Nonces</h3>
+            <p>Every request nonce is consumed immediately. Replay attacks are blocked at the server level.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Server-Side Analytics</h3>
+            <p>Execution counts tracked entirely server-side. Zero code injected into your scripts.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Anti-Dump Hooks</h3>
+            <p>The Hub overrides writefile, getscriptbytecode and similar APIs before executing your code.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🚫</div>
+            <h3>Rate Limiting</h3>
+            <p>IP-based rate limiting on all endpoints. Scraping and brute-force attempts are dropped instantly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loader section -->
+    <section id="loader" class="loader-section">
+      <div class="section-inner narrow">
+        <h2 class="section-title">One-Line Loader</h2>
+        <p class="section-sub">
+          Paste this into any Roblox exploit executor. The Hub automatically detects your game
+          and loads the right script — or aborts cleanly if unsupported.
+        </p>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyLoader()">Copy</button>
+          <pre><code id="loader-code">loadstring(game:HttpGet("https://YOUR-WORKER.workers.dev/hub"))();</code></pre>
+        </div>
+        <p class="loader-note">
+          ⚠️ Replace <code>YOUR-WORKER.workers.dev</code> with your actual Cloudflare Worker URL after deploy.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>DarkHub &mdash; <a href="admin/">Admin Panel</a></p>
+  </footer>
+
+  <script>
+    // ── Particle canvas ──────────────────────────────────────────────────────
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function initParticles() {
+      particles = Array.from({ length: 60 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.3,
+        a: Math.random() * 0.5 + 0.1,
+      }));
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139,92,246,${p.a})`;
+        ctx.fill();
+        p.x += p.dx; p.y += p.dy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    resize(); initParticles(); drawParticles();
+
+    // ── Copy loader ──────────────────────────────────────────────────────────
+    function copyLoader() {
+      const code = document.getElementById('loader-code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+</body>
+</html>

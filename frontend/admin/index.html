@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DarkHub — Admin Panel</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <meta name="robots" content="noindex, nofollow" />
+</head>
+<body class="admin-body">
+
+  <!-- ── Login Screen ────────────────────────────────────────── -->
+  <div id="admin-login">
+    <div class="login-card">
+      <span class="logo">Dark<span class="accent">Hub</span></span>
+      <p>Restricted access. Administrator only.</p>
+      <a id="github-login-btn" href="#" class="btn-github">
+        <svg width="20" height="20" viewBox="0 0 98 96" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M49 0C21.9 0 0 22 0 49.2 0 71 14 89.4 33.4 95.9c2.4.5 3.3-1.1 3.3-2.4v-8.4c-13.6 3-16.5-6.6-16.5-6.6-2.2-5.7-5.4-7.2-5.4-7.2-4.4-3 .3-3 .3-3 4.9.3 7.5 5.1 7.5 5.1 4.4 7.5 11.5 5.3 14.3 4.1.4-3.2 1.7-5.3 3.1-6.5-10.8-1.2-22.2-5.5-22.2-24.3 0-5.4 1.9-9.8 5-13.2-.5-1.2-2.2-6.3.5-13 0 0 4.1-1.3 13.4 5.1 3.9-1.1 8-1.6 12.2-1.6 4.1 0 8.3.5 12.2 1.6 9.3-6.4 13.4-5.1 13.4-5.1 2.7 6.7 1 11.8.5 13 3.1 3.4 5 7.8 5 13.2 0 18.9-11.4 23.1-22.3 24.3 1.8 1.5 3.3 4.5 3.3 9.1v13.5c0 1.3.9 2.9 3.4 2.4C84.1 89.4 98 71 98 49.2 98 22 76.1 0 49 0z"/>
+        </svg>
+        Sign in with GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Admin Shell (hidden until authenticated) ─────────────── -->
+  <div id="admin-shell" style="display:none; width:100%;">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <span class="logo">Dark<span class="accent">Hub</span></span>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active" data-page="dashboard" onclick="navigate('dashboard')">
+          <span class="icon">📊</span> Dashboard
+        </a>
+        <a class="sidebar-link" data-page="scripts" onclick="navigate('scripts')">
+          <span class="icon">📜</span> Scripts
+        </a>
+        <a class="sidebar-link" data-page="analytics" onclick="navigate('analytics')">
+          <span class="icon">📈</span> Analytics
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="admin-user">
+          <img id="admin-avatar" class="admin-avatar" src="" alt="Avatar" />
+          <span id="admin-name" class="admin-name">Loading...</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h1 id="page-title">Dashboard</h1>
+        <button class="btn-primary btn-sm" id="topbar-action" onclick="topbarAction()" style="display:none"></button>
+      </div>
+      <div class="admin-content" id="admin-content">
+        <!-- Dynamic content injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Script Modal ─────────────────────────────────────────── -->
+  <div class="modal-overlay" id="script-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">New Script</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="modal-script-id" value="" />
+        <div class="form-group">
+          <label for="modal-name">Script Name</label>
+          <input class="form-input" id="modal-name" type="text" placeholder="e.g. Blox Fruits Hack" maxlength="100" />
+        </div>
+        <div class="form-group">
+          <label for="modal-placeid">Place ID</label>
+          <input class="form-input" id="modal-placeid" type="text" placeholder="e.g. 2753915549" pattern="\d+" />
+        </div>
+        <div class="form-group">
+          <label for="modal-desc">Description (optional)</label>
+          <input class="form-input" id="modal-desc" type="text" placeholder="Short description" maxlength="500" />
+        </div>
+        <div class="form-group">
+          <label for="modal-source">Script Source (Luau)</label>
+          <textarea class="form-textarea" id="modal-source" placeholder="-- paste your Luau script here" style="min-height:260px;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-toggle">
+            <input type="checkbox" id="modal-enabled" checked />
+            <span>Enabled (serve to players)</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="saveScript()">Save Script</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast container ──────────────────────────────────────── -->
+  <div class="toast-container" id="toasts"></div>
+
+  <script src="../assets/admin.js"></script>
+</body>
+</html>

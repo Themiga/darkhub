@@ -1,0 +1,52 @@
+name = "darkhub-api"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ============================================================
+# KV Namespaces — create with: wrangler kv namespace create <NAME>
+# Then replace the placeholder IDs below with real ones
+# ============================================================
+
+[[kv_namespaces]]
+binding = "SCRIPTS_KV"
+id = "REPLACE_WITH_SCRIPTS_KV_ID"
+preview_id = "REPLACE_WITH_SCRIPTS_KV_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "SESSIONS_KV"
+id = "REPLACE_WITH_SESSIONS_KV_ID"
+preview_id = "REPLACE_WITH_SESSIONS_KV_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "RATELIMIT_KV"
+id = "REPLACE_WITH_RATELIMIT_KV_ID"
+preview_id = "REPLACE_WITH_RATELIMIT_KV_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "ANALYTICS_KV"
+id = "REPLACE_WITH_ANALYTICS_KV_ID"
+preview_id = "REPLACE_WITH_ANALYTICS_KV_PREVIEW_ID"
+
+[[kv_namespaces]]
+binding = "NONCES_KV"
+id = "REPLACE_WITH_NONCES_KV_ID"
+preview_id = "REPLACE_WITH_NONCES_KV_PREVIEW_ID"
+
+# ============================================================
+# Non-secret environment variables (safe to commit)
+# ============================================================
+[vars]
+FRONTEND_ORIGIN    = "https://YOUR-GITHUB-USERNAME.github.io"
+WORKER_ORIGIN      = "https://darkhub-api.YOUR-SUBDOMAIN.workers.dev"
+OAUTH_CALLBACK_URL = "https://YOUR-GITHUB-USERNAME.github.io/darkhub/callback.html"
+
+# ============================================================
+# Secrets — set via CLI, NEVER put real values here:
+#   wrangler secret put GITHUB_CLIENT_ID
+#   wrangler secret put GITHUB_CLIENT_SECRET
+#   wrangler secret put ADMIN_GITHUB_LOGIN
+#   wrangler secret put JWT_SECRET
+#   wrangler secret put HUB_HMAC_SECRET
+#   wrangler secret put AES_ENCRYPTION_KEY
+# ============================================================
