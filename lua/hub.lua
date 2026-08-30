@@ -270,19 +270,24 @@ local _sigMessage = _nonce .. ":" .. _placeId .. ":" .. _windowTs
 local _signature  = _hmac256(_HMAC_SECRET, _sigMessage)
 
 -- § 5.1  First check if game is supported (lightweight request)
+local _httpRequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+if not _httpRequest then warn("\27[31m[DarkHub] Seu executor nao suporta HTTP requests avancados.\27[0m") return end
+
 local _checkOk, _checkRes = pcall(function()
-    return game:HttpPost(
-        _WORKER_URL .. "/api/loader/check",
-        game:GetService("HttpService"):JSONEncode({
+    local res = _httpRequest({
+        Url = _WORKER_URL .. "/api/loader/check",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+            ["User-Agent"] = "DarkHub/1.0 RobloxGameClient"
+        },
+        Body = game:GetService("HttpService"):JSONEncode({
             placeId   = _placeId,
             nonce     = _nonce,
             signature = _signature,
-        }),
-        "application/json",
-        {
-            ["User-Agent"] = "DarkHub/1.0 RobloxGameClient",
-        }
-    )
+        })
+    })
+    return res.Body
 end)
 
 if not _checkOk or not _checkRes then
@@ -323,19 +328,21 @@ local _sigMsg2    = _nonce2 .. ":" .. _placeId .. ":" .. _windowTs2
 local _signature2 = _hmac256(_HMAC_SECRET, _sigMsg2)
 
 local _fetchOk, _fetchRes = pcall(function()
-    return game:HttpPost(
-        _WORKER_URL .. "/api/loader",
-        game:GetService("HttpService"):JSONEncode({
+    local res = _httpRequest({
+        Url = _WORKER_URL .. "/api/loader",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+            ["User-Agent"] = "DarkHub/1.0 RobloxGameClient"
+        },
+        Body = game:GetService("HttpService"):JSONEncode({
             placeId   = _placeId,
             nonce     = _nonce2,
             signature = _signature2,
             jobHash   = _jobHash,
-        }),
-        "application/json",
-        {
-            ["User-Agent"] = "DarkHub/1.0 RobloxGameClient",
-        }
-    )
+        })
+    })
+    return res.Body
 end)
 
 if not _fetchOk or not _fetchRes then
