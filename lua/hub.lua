@@ -378,9 +378,7 @@ _HMAC_SECRET  = nil -- secret is now consumed, remove from memory scope
 
 -- § 5.5  Execute the decrypted script via load()
 -- Using load() instead of loadstring() prevents source from being
--- accessible via getscriptclosure/getprotoconsts in most executors.
--- The empty chunkname "" hides the origin.
-local _chunk, _loadErr = load(_source, "", "t", getfenv and getfenv(1) or _G)
+local _chunk, _loadErr = loadstring(_source, "DarkHub")
 
 -- Immediately nil the source string — it must not linger
 _source = nil
