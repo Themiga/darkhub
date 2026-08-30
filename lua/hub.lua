@@ -376,22 +376,24 @@ _sigMsg2      = nil
 _nonce2       = nil
 _HMAC_SECRET  = nil -- secret is now consumed, remove from memory scope
 
--- § 5.5  Execute the decrypted script via load()
--- Using load() instead of loadstring() prevents source from being
-local _chunk, _loadErr = loadstring(_source, "DarkHub")
+-- § 5.5  Execute the decrypted script via loadstring()
+local _loader = loadstring or (getgenv and getgenv().loadstring) or load
+local _chunkOk, _chunk, _loadErr = pcall(function()
+    return _loader(_source)
+end)
 
 -- Immediately nil the source string — it must not linger
 _source = nil
 
-if not _chunk then
-    warn("\27[31m[DarkHub] Script load error: " .. tostring(_loadErr) .. "\27[0m")
+if not _chunkOk or not _chunk then
+    warn("\27[31m[DarkHub] Erro ao compilar script recebido: " .. tostring(_loadErr or _chunk) .. "\27[0m")
     return
 end
 
 -- Run the loaded chunk in protected mode
 local _runOk, _runErr = pcall(_chunk)
 if not _runOk then
-    warn("\27[31m[DarkHub] Runtime error: " .. tostring(_runErr) .. "\27[0m")
+    warn("\27[31m[DarkHub] Erro ao executar script: " .. tostring(_runErr) .. "\27[0m")
 end
 
 -- ── Hub has finished its job.
