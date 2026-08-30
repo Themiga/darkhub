@@ -49,7 +49,7 @@
 
         if (!res.ok) {
           // Non-admin or error — show blocked message
-          showError('You are not welcome in this area.');
+          showError(text || 'Unknown error');
           return;
         }
 
