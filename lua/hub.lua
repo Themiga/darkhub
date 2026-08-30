@@ -302,7 +302,7 @@ _decodeOk, _checkData = pcall(function()
 end)
 
 if not _decodeOk or not _checkData then
-    warn("\27[31m[DarkHub] Invalid server response.\27[0m")
+    warn("\27[31m[DarkHub] Invalid server response: " .. tostring(_checkRes) .. "\27[0m")
     return
 end
 
